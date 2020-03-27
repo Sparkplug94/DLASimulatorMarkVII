@@ -58,8 +58,8 @@ function [ phaseSpace ] = DLAUpdate( phaseSpace, eps, theta_r, rn, sigma_tau_las
     
     
     %find particle momentum
-    gamma = gamma_s*(1+delta);
-    pz = me*c*sqrt(gamma.^2-1);
+    gamma = gamma_s*(1 + delta); 
+    pz = me*c*sqrt(gamma.^2-1); %eV/c
     
     %calculate transverse dependence of kicks
     anp = (1-rn)*(exp(1i*theta_r)+1)/2;
@@ -70,7 +70,6 @@ function [ phaseSpace ] = DLAUpdate( phaseSpace, eps, theta_r, rn, sigma_tau_las
     trans_z = 1i   .* ( anp.*cosh(Gamma_n.*y) + anm.*sinh(Gamma_n.*y) );
     
     %calculate transverse dependence of synchronous kick
-    xi_n_s = 1/gamma_s;
     trans_z_s = 1i * anp;
     
     %calculate gaussian envelope of laser beam

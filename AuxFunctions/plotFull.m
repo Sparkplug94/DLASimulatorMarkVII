@@ -1,18 +1,18 @@
-function [ output_args ] = plotFull( dist, bins )
+function [ ] = plotFull( phaseSpace, bins )
     
     
     subplot(2,3,1)
-    plotPhaseSpace(dist,'x')
+    plotPhaseSpace(phaseSpace.dist,'x')
     subplot(2,3,2)
-    plotPhaseSpace(dist,'y')
+    plotPhaseSpace(phaseSpace.dist,'y')
     subplot(2,3,3)
-    plotPhaseSpace(dist,'s')
+    plotPhaseSpace(phaseSpace.dist,'s')
     subplot(2,3,5)
-    plotPhaseSpace(dist,'3D')
+    plotPhaseSpace(phaseSpace.dist,'3D')
     subplot(2,3,6)
-    longHist(dist, bins)
+    longHist(phaseSpace.dist, bins)
     subplot(2,3,4)
-    plotPhaseSpace(dist,'foc')
+    plotPhaseSpace(phaseSpace.dist,'foc')
     
 end
 

@@ -35,9 +35,9 @@ sigma_y = 100e-9; %standard deviation, m
 
 %beam divergence
 mu_xp = 0; %beam centroid relative to channel, m
-sigma_xp = 0.5e-3; %standard deviation, m
+sigma_xp = 0.1e-3; %standard deviation, m
 mu_yp = 0; %beam centroid relative to channel, m
-sigma_yp = 0.5e-3; %standard deviation, m
+sigma_yp = 0.1e-3; %standard deviation, m
 
 %beam length (time)
 sigma_tau_BEAM = 100e-15; %macrobunch length (stdev), s
@@ -102,7 +102,6 @@ phaseSpace.N = phaseSpace.N0; %Current particle number
 
 flipAPF = 0; %default is zero
 load('lattice.mat')
-
 for i = 1:cells
     
     if lattice(i)==1;
@@ -162,7 +161,8 @@ for i = 1:cells
     %Remove particles that hit the wall
     phaseSpace = remove(phaseSpace,'y',cw);
     phaseSpace = remove(phaseSpace,'x',ch);
-
+    phaseSpace = remove(phaseSpace,'delta',.01);
+    savedPhaseSpace{i} = phaseSpace;
 end
 
 
@@ -181,8 +181,8 @@ toc;
 phaseSpace = validate(phaseSpace);
 
 bins = 100;
-%figure('units','normalized','outerposition',[0 0 1 1])
-%plotFull(phaseSpace.dist, bins)
+figure('units','normalized','outerposition',[0 0 1 1])
+plotFull(phaseSpace, bins)
 
 %x axis for plotting (plot against distance)
 xAxis = 1e6*linspace(0,sum(Lambda),length(Ts));
@@ -191,45 +191,42 @@ disp('Making Plots...')
 tic;
 
 figure('units','normalized','outerposition',[0 0 1 1])
-subplot(2,3,1)
-plot(xAxis,(Ts)/1e3)
-xlabel('z (um)')
-ylabel('Synchronous Particle Energy (keV)')
-title('Beam Energy')
+    subplot(2,3,1)
+        plot(xAxis,(Ts)/1e3)
+        xlabel('z (um)')
+        ylabel('Synchronous Particle Energy (keV)')
+        title('Beam Energy')
+    subplot(2,3,2)
+        plot(xAxis,Lambda*1e6)
+        xlabel('z (um)')
+        ylabel('\Lambda (um)')
+        title('Period (um)')
+    subplot(2,3,3)
+        plot(xAxis,100*particles/phaseSpace.N0)
+        ylim([0 100])
+        xlabel('z (um)')
+        ylabel('Particle Survival %')
+        title(['Survival: ' num2str(100*phaseSpace.N/phaseSpace.N0) '%'])
+    subplot(2,3,4)
+        scatter(beta,100*particles/phaseSpace.N0)
+        ylim([0 100])
+        xlabel('Particle \beta')
+        ylabel('Particle Survival %')
+        title(['Particles vs. \beta'])
+    subplot(2,3,5)
+        plot(xAxis,phi_s/(pi)) 
+        ylim([0,2])
+        xlabel('z (um)')
+        ylabel('synchronous phase/\pi')
+        title('Synchronous Phase / \pi')
+    subplot(2,3,6)
+        plot(xAxis,beta) 
+        ylim([0,1])
+        xlabel('z (um)')
+        ylabel('\beta')
+        title('beta')
 
-subplot(2,3,2)
-plot(xAxis,Lambda*1e6)
-xlabel('z (um)')
-ylabel('\Lambda (um)')
-title('Period (um)')
-
-subplot(2,3,3)
-plot(xAxis,100*particles/phaseSpace.N0)
-ylim([0 100])
-xlabel('z (um)')
-ylabel('Particle Survival %')
-title(['Survival: ' num2str(100*phaseSpace.N/phaseSpace.N0) '%'])
-
-subplot(2,3,4)
-scatter(beta,100*particles/phaseSpace.N0)
-ylim([0 100])
-xlabel('Particle \beta')
-ylabel('Particle Survival %')
-title(['Particles vs. \beta'])
-
-subplot(2,3,5)
-plot(xAxis,phi_s/(pi)) 
-ylim([0,2])
-xlabel('z (um)')
-ylabel('synchronous phase/\pi')
-title('Synchronous Phase / \pi')
-
-subplot(2,3,6)
-plot(xAxis,beta) 
-ylim([0,1])
-xlabel('z (um)')
-ylabel('\beta')
-title('beta')
+plotEnergyHistory(savedPhaseSpace);
 
 %% Complete 
 disp('Complete')
