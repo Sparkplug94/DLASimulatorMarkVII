@@ -47,7 +47,7 @@ sigma_s = beta0*c_SI*sigma_tau_BEAM; %macrobunch length (stdev), m
 N = 1e4;
 
 %peak gradient
-eps = 200e6; %can be complex number
+eps = 200e6; %can be complex number, but code does not handle this well
 
 %synchronous phase
 phi_s0 = pi/3;

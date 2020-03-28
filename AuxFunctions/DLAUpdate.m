@@ -82,7 +82,7 @@ function [ phaseSpace ] = DLAUpdate( phaseSpace, eps, theta_r, rn, sigma_tau_las
     
     %calculate other parts of kicks
     phi = mod(phi_s - 2*pi*s/Lambda, 2*pi); %should this be reversed? maybe? I'm going to try it this way
-    g = q .* eps_env .* Lambda .* exp(-1i.*phi) .* ( 1 + 1i.*delta./(beta_s.^2 * gamma_s.^2) ) / (beta_s * c);
+    g = q .* eps_env .* Lambda .* exp(-1i.*phi) .* ( 1 + 1i*pi.*delta./(beta_s.^2 * gamma_s.^2) ) / (beta_s * c);
     
     %calculate other parts of synchronous kick
     g_s = q * eps * Lambda * exp(-1i*phi_s) / (beta_s * c);
