@@ -12,6 +12,12 @@ tic;
 %This code needs testing and benchmarking, but initial tests look like it
 %works - APF increases particle survival and bunching occurs properly (?)
 
+%% Current issues
+%i'm not sure how to correctly define the phase phi in the DLAUpdate
+%function
+%the plus and minus signs are getting the better of me.
+%I think here I've defined s as delay behind the reference particle, and
+%everything is fine, but i'm not sure
 
 %% Global Constants
 c_SI = 299792458; %speed of light, m/s
@@ -47,7 +53,7 @@ sigma_s = beta0*c_SI*sigma_tau_BEAM; %macrobunch length (stdev), m
 N = 1e4;
 
 %peak gradient
-eps = 200e6; %can be complex number, but code does not handle this well
+eps = 200e6; %REAL NUMBER - Phase of gradient is incorporated into phi_s?
 
 %synchronous phase
 phi_s0 = pi/3;
@@ -82,8 +88,10 @@ phaseSpace.distOrig = makeGaussBeam( mu_x, sigma_x,...
 
 %init additional tracked parameters
 phaseSpace.gamma_s = gamma0; %synchronous gamma
-phaseSpace.phi_s = phi_s0; %laser phase/synchronous particle phase relative to laser - update laser phase during drifts
-                        
+phaseSpace.phi_s = phi_s0; %laser phase/synchronous particle phase RELATIVE TO PHASE OF GRADIENT/LASER
+
+%HOW IS PHI DEFINED?? 
+
 %init global parameters
 phaseSpace.lam0 = lam0; %wavelength
 phaseSpace.gamma0 = gamma0; %injection energy
@@ -177,18 +185,19 @@ toc;
 
 %% Plotting
 
+disp('Making Plots...')
+tic;
+
 %validate phase space to remove NaN values (why do these appear??)
 phaseSpace = validate(phaseSpace);
 
 bins = 100;
-figure('units','normalized','outerposition',[0 0 1 1])
-plotFull(phaseSpace, bins)
+%figure('units','normalized','outerposition',[0 0 1 1])
+%plotFull(phaseSpace, bins)
 
 %x axis for plotting (plot against distance)
 xAxis = 1e6*linspace(0,sum(Lambda),length(Ts));
 
-disp('Making Plots...')
-tic;
 
 figure('units','normalized','outerposition',[0 0 1 1])
     subplot(2,3,1)

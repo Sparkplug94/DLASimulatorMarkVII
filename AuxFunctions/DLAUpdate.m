@@ -21,7 +21,7 @@ function [ phaseSpace ] = DLAUpdate( phaseSpace, eps, theta_r, rn, sigma_tau_las
     
     %x - gaussian, described by mu_x and sigma_x, in m
     %y - gaussian, described by mu_y and sigma_y, in m
-    %s - gaussian, described by sigma_s, s = z - z_synchronous
+    %s - gaussian, described by sigma_s, s = z_synchronous - z
     %xp - gaussian, described by mu_xp and sigma_xp, in radians
     %yp - gaussian, described by mu_yp and sigma_yp, in radians
     %delta - gaussian - described by mu_T0, sigma_deltaW
@@ -81,11 +81,15 @@ function [ phaseSpace ] = DLAUpdate( phaseSpace, eps, theta_r, rn, sigma_tau_las
     end
     
     %calculate other parts of kicks
-    phi = mod(phi_s - 2*pi*s/Lambda, 2*pi); %should this be reversed? maybe? I'm going to try it this way
+    phi = mod(phi_s - 2*pi*s/Lambda, 2*pi);
+    %logic behind the minus sign - if s>0, s LAGS synchronous particle,
+    %arrives late, arrives at MORE phase, and since exp(-1i*phi) has a
+    %minus sign, this is correct?
     g = q .* eps_env .* Lambda .* exp(-1i.*phi) .* ( 1 + 1i*pi.*delta./(beta_s.^2 * gamma_s.^2) ) / (beta_s * c);
-    
     %calculate other parts of synchronous kick
     g_s = q * eps * Lambda * exp(-1i*phi_s) / (beta_s * c);
+    %should the exponetial terms be positive or negative?
+
     
     %calculate momentum kicks
     deltaPx = 0; %kick in px

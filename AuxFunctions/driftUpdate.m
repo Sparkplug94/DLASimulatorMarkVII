@@ -3,7 +3,7 @@ function [ phaseSpace ] = driftUpdate( phaseSpace, L )
     
     %x - gaussian, described by mu_x and sigma_x, in m
     %y - gaussian, described by mu_y and sigma_y, in m
-    %s - gaussian, described by sigma_s, s = z - z_synchronous
+    %s - gaussian, described by sigma_s, s = z_synchronous - z
     %xp - gaussian, described by mu_xp and sigma_xp, in radians
     %yp - gaussian, described by mu_yp and sigma_yp, in radians
     %delta - gaussian - described by mu_T0, sigma_deltaW
@@ -34,6 +34,8 @@ function [ phaseSpace ] = driftUpdate( phaseSpace, L )
     %update synchronous variables
     %no beta or gamma change
     phaseSpace.phi_s = mod(phi_s + 2*pi*L/(beta_s*phaseSpace.lam0), 2*pi); %I think this should be a plus, not a minus
+    %logic - when particle drifts, it skips some of the laser oscillation -
+    %skips time - skips phase - ADDS phase to oscillation??
     
 end
 
