@@ -18,7 +18,7 @@ function [ ] = plotEnergyHistory( savedPhaseSpace )
     end
         xlabel('Cell')
         ylabel('Kinetic Energy (keV)')
-        plot(T_s,'ro')
+        plot(T_s,'r.')
         
     
 end

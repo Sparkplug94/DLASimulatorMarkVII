@@ -31,7 +31,7 @@ T0 = 90e3; %injection energy, eV
 
 %beam energy
 [beta0, gamma0] = KE2rel(T0); %injection beta, gamma
-deltaE = 10; %energy spread (stdev), eV
+deltaE = 1; %energy spread (stdev), eV
 
 %beam size
 mu_x = 0; %beam centroid relative to channel, m
@@ -53,9 +53,9 @@ sigma_s = beta0*c_SI*sigma_tau_BEAM; %macrobunch length (stdev), m
 N = 1e4;
 
 %peak gradient
-eps = 200e6; %REAL NUMBER - Phase of gradient is incorporated into phi_s?
+eps = 200e6; %REAL NUMBER - Phase of gradient is incorporated into phi_s
 
-%synchronous phase
+%synchronous phase RELATIVE TO LASER PHASE
 phi_s0 = pi/3;
 
 disp(['Normalized Emittance: ' num2str(sigma_x*sigma_xp*1e12*beta0*gamma0) ' pm'])
@@ -169,7 +169,7 @@ for i = 1:cells
     %Remove particles that hit the wall
     phaseSpace = remove(phaseSpace,'y',cw);
     phaseSpace = remove(phaseSpace,'x',ch);
-    phaseSpace = remove(phaseSpace,'delta',.01);
+    phaseSpace = remove(phaseSpace,'delta',.05);
     savedPhaseSpace{i} = phaseSpace;
 end
 

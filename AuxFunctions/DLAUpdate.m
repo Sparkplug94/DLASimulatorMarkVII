@@ -85,9 +85,9 @@ function [ phaseSpace ] = DLAUpdate( phaseSpace, eps, theta_r, rn, sigma_tau_las
     %logic behind the minus sign - if s>0, s LAGS synchronous particle,
     %arrives late, arrives at MORE phase, and since exp(-1i*phi) has a
     %minus sign, this is correct?
-    g = q .* eps_env .* Lambda .* exp(-1i.*phi) .* ( 1 + 1i*pi.*delta./(beta_s.^2 * gamma_s.^2) ) / (beta_s * c);
+    g = q .* eps_env .* Lambda .* exp(1i.*phi) .* ( 1 + 1i*pi.*delta./(beta_s.^2 * gamma_s.^2) ) / (beta_s * c);
     %calculate other parts of synchronous kick
-    g_s = q * eps * Lambda * exp(-1i*phi_s) / (beta_s * c);
+    g_s = q * eps * Lambda * exp(1i*phi_s) / (beta_s * c);
     %should the exponetial terms be positive or negative?
 
     
