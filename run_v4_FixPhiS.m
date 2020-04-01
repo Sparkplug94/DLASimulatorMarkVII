@@ -169,7 +169,7 @@ for i = 1:cells
     %Remove particles that hit the wall
     phaseSpace = remove(phaseSpace,'y',cw);
     phaseSpace = remove(phaseSpace,'x',ch);
-    phaseSpace = remove(phaseSpace,'delta',.05);
+    phaseSpace = remove(phaseSpace,'delta',.02);
     savedPhaseSpace{i} = phaseSpace;
 end
 
