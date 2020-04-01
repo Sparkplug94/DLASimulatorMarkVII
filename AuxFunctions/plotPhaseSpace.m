@@ -71,6 +71,11 @@ function [] = plotPhaseSpace( dist , opt)
         scatter(s*1e6,yp*1e3,'.')
         xlabel('s (\mum)')
         ylabel('y'' (mrad)')
+        
+        case 'xy'
+        scatter(x*1e6,y*1e6,'.')
+        xlabel('x (\mum)')
+        ylabel('y (\mum)')  
             
     end
     set(gca,'FontSize',14)
