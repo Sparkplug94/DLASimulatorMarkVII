@@ -6,8 +6,8 @@ clc
 
 %make lattice
 
-M = [15,16,17,18,19,20]; %length of APF cell
-num = [166,166,166,166,166,166]; %number of periods
+M = [12,24,25,26,27,28,29,30]; %length of APF cell
+num = [12,166,166,166,166,166,166,166]; %number of periods
 
 %M = [16]
 %num = [1000]

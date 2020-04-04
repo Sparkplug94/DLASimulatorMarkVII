@@ -25,7 +25,7 @@ c = 1; %normalized speed of light, I think this is fine for everything except in
 me = 511e3; %mass of electron, eV
 lam0 = 2e-6; %wavelength, m
 T0 = 90e3; %injection energy, eV
-[beta0, gamma0] = KE2rel(T0); %injection beta, gamma
+%[beta0, gamma0] = KE2rel(T0); %injection beta, gamma
 
 %% Initial Beam Parameters
 
@@ -50,10 +50,10 @@ sigma_tau_BEAM = 100e-15; %macrobunch length (stdev), s
 sigma_s = beta0*c_SI*sigma_tau_BEAM; %macrobunch length (stdev), m
 
 %number of particles
-N = 1e4;
+N = 1e5;
 
 %peak gradient
-eps = 200e6; %REAL NUMBER - Phase of gradient is incorporated into phi_s
+eps = 100e6; %REAL NUMBER - Phase of gradient is incorporated into phi_s
 
 %synchronous phase RELATIVE TO LASER PHASE
 phi_s0 = pi/3;
@@ -169,7 +169,7 @@ for i = 1:cells
     %Remove particles that hit the wall
     phaseSpace = remove(phaseSpace,'y',cw);
     phaseSpace = remove(phaseSpace,'x',ch);
-    phaseSpace = remove(phaseSpace,'delta',.02);
+    phaseSpace = remove(phaseSpace,'delta',.01);
     savedPhaseSpace{i} = phaseSpace;
 end
 
@@ -236,7 +236,7 @@ figure('units','normalized','outerposition',[0 0 1 1])
         title('beta')
 
 plotEnergyHistory(savedPhaseSpace);
-
+title('Particle Traces')
 %% Complete 
 disp('Complete')
 toc;

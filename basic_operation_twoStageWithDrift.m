@@ -174,7 +174,7 @@ theta_2 = 0; %relative laser phase
 rn = 0;
 
 %run n1 DLA cells
-for i = 1:n1
+for i = 1:n2
     phaseSpace = DLAUpdate( phaseSpace, eps_2, theta_2, rn, sigma_tau_LAS);
 
 end
