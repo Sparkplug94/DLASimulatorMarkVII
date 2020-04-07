@@ -27,6 +27,8 @@ function [ phaseSpace ] = DLAUpdate( phaseSpace, eps, theta_r, rn, sigma_tau_las
     %delta - gaussian - described by mu_T0, sigma_deltaW
     
     
+    
+    
     %constants
     me = 511e3; %electron mass, eV;
     c = 1; %speed of light = 1 for this, because i think it works out ok.
@@ -84,6 +86,13 @@ function [ phaseSpace ] = DLAUpdate( phaseSpace, eps, theta_r, rn, sigma_tau_las
     phi = mod(phi_s - 2*pi*s/Lambda, 2*pi);
     %logic behind the minus sign - s>0 indicates it comes EARLIER = LESS
     %PHASE
+    
+    % 1% amplitude and phase noise
+    perc = 5;
+    a_noise = 1+perc*rand(1)/100;
+    p_noise = 1+perc*rand(1)/100;
+    eps_env = a_noise*eps_env;
+    phi = phi*p_noise;
     
     g = q .* eps_env .* Lambda .* exp(1i.*phi) .* ( 1 + 1i*pi.*delta./(beta_s.^2 * gamma_s.^2) ) / (beta_s * c);
     %calculate other parts of synchronous kick
