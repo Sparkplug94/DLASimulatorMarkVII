@@ -1,15 +1,15 @@
 clear all
 close all
 clc
-imported = csvread('PeakGrad100_dims.csv');
+imported = csvread('PeakGrad100Lattice_NEW.csv');
 %units of um
 centers = [];
 for i = 1:length(imported)
     centers = [centers; imported(1,i) imported(2,i)];
-    pillar{i}.x = imported(1,i);
-    pillar{i}.y = imported(1,i);
-    pillar{i}.xdiam = imported(3,i);
-    pillar{i}.ydiam = imported(4,i);
+%     pillar{i}.x = imported(1,i);
+%     pillar{i}.y = imported(2,i);
+%     pillar{i}.xdiam = imported(3,i);
+%     pillar{i}.ydiam = imported(4,i);
 end
 
 %remove all pillars with x < 0

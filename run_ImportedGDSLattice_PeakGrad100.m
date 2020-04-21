@@ -119,6 +119,7 @@ for i = 1:cells
             beta(i) = gamma2beta(phaseSpace.gamma_s);
             latticeDesign{i,1} = 'DLA';
             latticeDesign{i,2} = Lambda(i);
+            latticeDesign{i,3} = beta(i);
             
         case 'Drift'
 
@@ -133,6 +134,7 @@ for i = 1:cells
             Lambda(i) = APFDrift;
             latticeDesign{i,1} = 'Drift';
             latticeDesign{i,2} = Lambda(i);
+            latticeDesign{i,3} = beta(i);
     end
     
     %Remove particles that hit the wall
@@ -221,3 +223,5 @@ figure, plot(100*(Lambda'-lattice_Explicit(:,1))./Lambda')
 ylabel('% Difference')
 xlabel('Cell')
 title('Difference between perfectly phasematched lattice and input lattice')
+
+writeLattice(latticeDesign,'ImportedGDSLattice')
