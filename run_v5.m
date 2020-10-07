@@ -135,6 +135,7 @@ for i = 1:cells
             beta(i) = gamma2beta(phaseSpace.gamma_s);
             latticeDesign{i,1} = 'DLA';
             latticeDesign{i,2} = Lambda(i);
+            latticeDesign{i,3} = beta(i);
             
         case 'Drift'
 
@@ -153,7 +154,7 @@ for i = 1:cells
             end
             
             deltaPhi = mod(phi_s_goal - phaseSpace.phi_s,2*pi);
-            APFDrift = deltaPhi*beta_s*lam0/(2*pi);
+            APFDrift = beta_s*lam0*(2*pi+deltaPhi)/(2*pi);
             phaseSpace = driftUpdate(phaseSpace, APFDrift);
             
             %store variables to plot
@@ -248,4 +249,4 @@ disp(['Avg Gradient: ' num2str((Ts(end)-T0)/sum(Lambda)/1e6) ' MeV/m'])
 disp(['Avg Energy Gain per Cell: ' num2str((Ts(end)-T0)/dlaPeriods) ' eV'])
 %% Write Lattice to file
 
-writeLattice(latticeDesign,'run_v5_outputLattice');
+writeLattice(latticeDesign,'run_v5_latticeDesign_matlabExport');
